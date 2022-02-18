@@ -81,21 +81,17 @@ double TurretSubsystem::EstimateTurretAngle(double ticks) {
 double TurretSubsystem::FindTurretError(double centerAngle, double turretAngle) {
     if (centerAngle >= 0 && centerAngle < 90) {
         return (90 - turretAngle) + centerAngle;
-        // return std::abs(turretAngle) + 90 + centerAngle;
     } 
     
     if (centerAngle > 90) {
         return -(turretAngle + 90 + (180 - centerAngle));
-        // return -((90 - std::abs(turretAngle)) + (180 - centerAngle));
     }
 
     if (centerAngle < 0 && centerAngle > -90) {
         return (90 - turretAngle) - std::abs(centerAngle);
-        // return 90 - std::abs(centerAngle) + std::abs(turretAngle);
     }
 
     return -(turretAngle + std::abs(centerAngle) - 90);
-    // return -((std::abs(centerAngle) - 90) - std::abs(turretAngle));
 }
 
 double TurretSubsystem::Clamp(double value, double max) {
