@@ -73,7 +73,7 @@ void TurretSubsystem::ZeroTurretEncoder() {
     turretMotor.SetSelectedSensorPosition(0.0);
 }
 
-double TurretSubsystem::EstimateTurretAngle(double ticks) {
+double TurretSubsystem::EstimateTurretAngle(double ticks) { 
     // theta = arc length / radius
     return (ticks * TurretConstants::kTurretTicksToInches) / TurretConstants::kTurretRadiusInches * RADIANS_TO_DEGREES; 
 }
