@@ -26,7 +26,7 @@ void TurretSubsystem::Periodic() {
     frc::SmartDashboard::PutNumber("Hub Angle", hubAngle);
     frc::SmartDashboard::PutNumber("Error", m_error);
     
-    // From drive subsystem
+    // Encoder and gyro values from drive subsystem
     currentLeft = datatable->GetNumber("encoders_left", 0.0);
     currentRight = datatable->GetNumber("encoders_right", 0.0);
     robotAngle = datatable->GetNumber("gyro", 0.0);
@@ -42,6 +42,7 @@ void TurretSubsystem::Periodic() {
     xRobotFeet -= (xCurrent - xPrev);
     xPrev = xCurrent;
     
+    // Calculate the angle needed to turn towards the hub
     hubAngle = atan2(yRobotFeet.to<double>(), xRobotFeet.to<double>()) * RADIANS_TO_DEGREES;
     turretAngle = fmod(robotAngle + EstimateTurretAngle(GetTurretPos()), 360.0);
     m_error = FindTurretError(hubAngle, turretAngle);
