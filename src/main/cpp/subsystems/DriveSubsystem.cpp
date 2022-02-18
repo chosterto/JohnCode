@@ -14,6 +14,8 @@ DriveSubsystem::DriveSubsystem() {
 // This method will be called once per scheduler run
 void DriveSubsystem::Periodic() {
     frc::SmartDashboard::PutNumber("Gyro Angle", GetGyroAngle());
+
+    // write to networktables
     datatable->PutNumber("encoders_left", LeftEncoders());
     datatable->PutNumber("encoders_right", RightEncoders());
     datatable->PutNumber("gyro", GetGyroAngle());
@@ -36,10 +38,10 @@ double DriveSubsystem::RightEncoders() {
 }
 
 void DriveSubsystem::ZeroDriveEncoders() {
-    // m_frontLeft.SetSelectedSensorPosition(0.0);
-    // m_frontRight.SetSelectedSensorPosition(0.0);
-    // m_backLeft.SetSelectedSensorPosition(0.0);
-    // m_backRight.SetSelectedSensorPosition(0.0);
+    m_frontLeft.SetSelectedSensorPosition(0.0);
+    m_frontRight.SetSelectedSensorPosition(0.0);
+    m_backLeft.SetSelectedSensorPosition(0.0);
+    m_backRight.SetSelectedSensorPosition(0.0);
 }
 
 double DriveSubsystem::GetGyroAngle() {

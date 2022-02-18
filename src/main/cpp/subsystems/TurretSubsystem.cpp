@@ -26,19 +26,10 @@ void TurretSubsystem::Periodic() {
     frc::SmartDashboard::PutNumber("Hub Angle", hubAngle);
     frc::SmartDashboard::PutNumber("Error", m_error);
     
+    // From drive subsystem
     currentLeft = datatable->GetNumber("encoders_left", 0.0);
     currentRight = datatable->GetNumber("encoders_right", 0.0);
     robotAngle = datatable->GetNumber("gyro", 0.0);
-    // deltaLeft = Clamp(currentLeft - previousLeft, 1000);
-    // deltaRight = Clamp(currentRight - previousRight, 1000);
-    // previousLeft = currentLeft;
-    // previousRight = currentRight;
-
-    // if (std::abs(deltaLeft + deltaRight) > 400) {
-    //     double mid = (deltaLeft + deltaRight) / 2;
-    //     xRobotFeet -= units::foot_t(mid * DriveConstants::kDriveTicksToInches * INCHES_TO_FEET * sin(robotAngle * DEGREES_TO_RADIANS));
-    //     yRobotFeet += units::foot_t(mid * DriveConstants::kDriveTicksToInches * INCHES_TO_FEET * cos(robotAngle * DEGREES_TO_RADIANS));
-    // }
 
     currentLeft *= DriveConstants::kDriveTicksToInches * INCHES_TO_FEET;
     currentRight *= DriveConstants::kDriveTicksToInches * INCHES_TO_FEET;
@@ -54,26 +45,19 @@ void TurretSubsystem::Periodic() {
     hubAngle = atan2(yRobotFeet.to<double>(), xRobotFeet.to<double>()) * RADIANS_TO_DEGREES;
     turretAngle = fmod(robotAngle + EstimateTurretAngle(GetTurretPos()), 360.0);
     m_error = FindTurretError(hubAngle, turretAngle);
+
     // Loop around if error exceeds range of turret
     if (m_error > 360.0 - turretFOV) m_error -= 360;
     if (m_error < turretFOV - 360.0) m_error += 360;
 
+    // Calculate speed based on error
     m_speed = Clamp(m_error * m_gain, 1.0);
+
+    // Limit turret rotation
     if ( (GetTurretPos() > 6000 && m_speed > 0) || (GetTurretPos() < -6000 && m_speed < 0) ) {
         m_speed = 0.0;
     }
 
-    // m_targetFound = limetable->GetNumber("tv", 0.0);
-    
-    // if (m_targetFound) {
-    //     m_error = limetable->GetNumber("tx", 0.0);
-    //     m_speed = -m_error * m_gain;
-    //     double turretPos = GetTurretPos();
-    //     if ( (turretPos > 6000 && m_speed > 0) || (turretPos < -6000 && m_speed < 0) ) {
-    //         m_speed = 0.0;
-    //     }
-    // }
-    
     turretMotor.Set(ControlMode::PercentOutput, m_speed);
 }
 
@@ -90,6 +74,7 @@ void TurretSubsystem::ZeroTurretEncoder() {
 }
 
 double TurretSubsystem::EstimateTurretAngle(double ticks) {
+    // theta = arc length / radius
     return (ticks * TurretConstants::kTurretTicksToInches) / TurretConstants::kTurretRadiusInches * RADIANS_TO_DEGREES; 
 }
 
