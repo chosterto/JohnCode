@@ -6,8 +6,11 @@
 #include <frc/smartdashboard/SmartDashboard.h>
 
 DriveSubsystem::DriveSubsystem() {
+    m_frontLeft.SetInverted(false);
+    m_backLeft.SetInverted(false);
     m_frontRight.SetInverted(true);
     m_backRight.SetInverted(true);
+    
     ZeroDriveEncoders();
 }
 
@@ -15,7 +18,7 @@ DriveSubsystem::DriveSubsystem() {
 void DriveSubsystem::Periodic() {
     frc::SmartDashboard::PutNumber("Gyro Angle", GetGyroAngle());
 
-    // write to networktables
+    // Write to networktables
     datatable->PutNumber("encoders_left", LeftEncoders());
     datatable->PutNumber("encoders_right", RightEncoders());
     datatable->PutNumber("gyro", GetGyroAngle());

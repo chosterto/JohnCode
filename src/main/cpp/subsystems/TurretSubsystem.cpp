@@ -21,8 +21,6 @@ TurretSubsystem::TurretSubsystem() : m_gain(0.1) {
 void TurretSubsystem::Periodic() {
     frc::SmartDashboard::PutNumber("Turret Encoder", GetTurretPos());
     frc::SmartDashboard::PutNumber("Turret Angle", turretAngle);
-    frc::SmartDashboard::PutNumber("x", xRobotFeet.to<double>());
-    frc::SmartDashboard::PutNumber("y", yRobotFeet.to<double>());
     frc::SmartDashboard::PutNumber("Hub Angle", hubAngle);
     frc::SmartDashboard::PutNumber("Error", m_error);
     
@@ -36,6 +34,7 @@ void TurretSubsystem::Periodic() {
     frc::Rotation2d gyroAngle{units::degree_t(robotAngle)};
     m_odometry.Update(gyroAngle, units::foot_t(currentLeft), units::foot_t(currentRight));
 
+    // Get x and y values of robot relative to hub
     yRobotFeet = units::foot_t(m_odometry.GetPose().X());
     // Invert X direction 
     xCurrent = units::foot_t(m_odometry.GetPose().Y());
@@ -60,6 +59,7 @@ void TurretSubsystem::Periodic() {
     }
 
     turretMotor.Set(ControlMode::PercentOutput, m_speed);
+    
 }
 
 void TurretSubsystem::MoveTurret(double speed) {
