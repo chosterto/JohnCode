@@ -15,6 +15,8 @@
 
 TurretSubsystem::TurretSubsystem() : m_gain(0.1) {
     ZeroTurretEncoder();
+    
+    // turretMotor.SetNeutralMode(ctre::phoenix::motorcontrol::Coast);
 }
 
 // This method will be called once per scheduler run

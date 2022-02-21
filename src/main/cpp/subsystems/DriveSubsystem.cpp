@@ -33,18 +33,16 @@ void DriveSubsystem::DriveStop() {
 }
 
 double DriveSubsystem::LeftEncoders() {
-    return (m_frontLeft.GetSelectedSensorPosition() + m_backLeft.GetSelectedSensorPosition()) / 2;
+    return m_frontLeft.GetSelectedSensorPosition();
 }
 
 double DriveSubsystem::RightEncoders() {
-    return (m_frontRight.GetSelectedSensorPosition() + m_backRight.GetSelectedSensorPosition()) / 2;
+    return m_frontRight.GetSelectedSensorPosition();
 }
 
 void DriveSubsystem::ZeroDriveEncoders() {
     m_frontLeft.SetSelectedSensorPosition(0.0);
     m_frontRight.SetSelectedSensorPosition(0.0);
-    m_backLeft.SetSelectedSensorPosition(0.0);
-    m_backRight.SetSelectedSensorPosition(0.0);
 }
 
 double DriveSubsystem::GetGyroAngle() {

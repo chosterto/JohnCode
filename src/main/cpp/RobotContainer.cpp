@@ -28,8 +28,8 @@ void RobotContainer::ConfigureButtonBindings() {
   frc2::Button J0B1{[&] { return m_driverController.GetRawButton(1); }};
   frc2::Button J0B2{[&] { return m_driverController.GetRawButton(2); }};
 
-  J0B1.WhileHeld(ManualTurretCommand(&m_turretSubsystem, 0.5));
-  J0B2.WhileHeld(ManualTurretCommand(&m_turretSubsystem, -0.5));
+  J0B1.WhileHeld(ManualTurretCommand(&m_turretSubsystem, 1.0));
+  J0B2.WhileHeld(ManualTurretCommand(&m_turretSubsystem, -1.0));
 }
 
 frc2::Command* RobotContainer::GetAutonomousCommand() {
