@@ -45,7 +45,7 @@ void TurretSubsystem::Periodic() {
     
     // Calculate the angle needed to turn towards the hub
     hubAngle = atan2(yRobotFeet.to<double>(), xRobotFeet.to<double>()) * RADIANS_TO_DEGREES;
-    turretAngle = fmod(robotAngle + EstimateTurretAngle(GetTurretPos()), 360.0);
+    turretAngle = fmod(robotAngle + offsetAngle + EstimateTurretAngle(GetTurretPos()), 360.0);
     m_error = FindTurretError(hubAngle, turretAngle);
 
     // Loop around if error exceeds range of turret

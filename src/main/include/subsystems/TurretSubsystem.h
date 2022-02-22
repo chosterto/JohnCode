@@ -46,8 +46,11 @@ class TurretSubsystem : public frc2::SubsystemBase {
   double m_speed = 0.0;
   bool m_targetFound;
 
+  // Starting configuration
   units::foot_t xRobotFeet = 0.0_ft;
   units::foot_t yRobotFeet = -4.17_ft;
+  double offsetAngle = 0.0;
+
   units::foot_t xPrev = xRobotFeet;
   units::foot_t xCurrent;
   double turretFOV = 180.0;
