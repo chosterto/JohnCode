@@ -22,6 +22,14 @@ namespace TurretConstants {
     constexpr double kTurretTicksToInches = kTurretCircumference / kEncoderTicksPerTurretRev;  
 }
 
+namespace ShooterConstants {
+    constexpr double kShooterEncoderTicksPerRev = 2048;
+    constexpr double kShooterGearRatio = 1.0;
+    constexpr double kFlywheelCircumference = 12.57;
+
+    constexpr double kFlywheelTicksToInches = kFlywheelCircumference / (kShooterEncoderTicksPerRev * kShooterGearRatio);
+}
+
 namespace DriveConstants {
     constexpr double kDriveEncoderTicksPerRev = 2048;
     constexpr double kDriveGearRatio = 10;

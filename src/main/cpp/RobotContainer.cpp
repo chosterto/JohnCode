@@ -8,6 +8,7 @@
 
 #include "commands/DriveCommand.h"
 #include "commands/ManualTurretCommand.h"
+#include "commands/FeederCommand.h"
 
 RobotContainer::RobotContainer() : m_autonomousCommand(&m_subsystem) {
   // Initialize all of your commands and subsystems here
@@ -27,9 +28,11 @@ void RobotContainer::ConfigureButtonBindings() {
   // Configure your button bindings here
   frc2::Button J0B1{[&] { return m_driverController.GetRawButton(1); }};
   frc2::Button J0B2{[&] { return m_driverController.GetRawButton(2); }};
+  frc2::Button J0B3{[&] { return m_driverController.GetRawButton(3); }};
 
   J0B1.WhileHeld(ManualTurretCommand(&m_turretSubsystem, 1.0));
   J0B2.WhileHeld(ManualTurretCommand(&m_turretSubsystem, -1.0));
+  J0B3.WhileHeld(FeederCommand(&m_shootersubsystem, 0.7));
 }
 
 frc2::Command* RobotContainer::GetAutonomousCommand() {

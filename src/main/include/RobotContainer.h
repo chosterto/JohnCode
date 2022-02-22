@@ -14,6 +14,7 @@
 #include "subsystems/ExampleSubsystem.h"
 #include "subsystems/DriveSubsystem.h"
 #include "subsystems/TurretSubsystem.h"
+#include "subsystems/ShooterSubsystem.h"
 
 /**
  * This class is where the bulk of the robot should be declared.  Since
@@ -37,6 +38,7 @@ class RobotContainer {
   ExampleCommand m_autonomousCommand;
   DriveSubsystem m_driveSubsystem;
   TurretSubsystem m_turretSubsystem;
+  ShooterSubsystem m_shootersubsystem;
 
   void ConfigureButtonBindings();
 };

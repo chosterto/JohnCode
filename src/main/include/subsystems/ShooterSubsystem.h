@@ -22,6 +22,8 @@ class ShooterSubsystem : public frc2::SubsystemBase {
 
   void ShooterMove(double velocity);
   void ShooterStop();
+  void FeederMove(double speed);
+  void FeederStop();
 
  private:
   // Components (e.g. motor controllers and sensors) should generally be
@@ -31,14 +33,16 @@ class ShooterSubsystem : public frc2::SubsystemBase {
 
   WPI_TalonFX flywheelMotorL{14};
   WPI_TalonFX flywheelMotorR{15};
+  WPI_TalonFX feederMotorBottom{12};
+  WPI_TalonSRX feederMotor{8};
 
   double velocity;
-  double shootingAngle = 69.0;
-  double time = 5.0;
-  double hubHeight = 8.67;
-  double cameraHeight = 4.0;
-  double xDistance;
-  double mountingAngle = 45.0;
+  double shootingAngle = 60.0;
+  double time = 1.5;
+  double hubHeight = 104.00004;
+  double cameraHeight = 27.0;
+  double mountingAngle = 40.0;
   double verticalError;
+  double xDistance;
   bool targetFound;
 };
