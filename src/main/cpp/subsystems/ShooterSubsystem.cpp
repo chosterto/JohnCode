@@ -15,21 +15,22 @@ ShooterSubsystem::ShooterSubsystem() {
 
     feederMotor.SetInverted(true);
     feederMotorBottom.SetInverted(true);
+
+    flywheelMotorL.ConfigOpenloopRamp(0.1);
+    flywheelMotorR.ConfigOpenloopRamp(0.1);
 }
 
 // This method will be called once per scheduler run
 void ShooterSubsystem::Periodic() {
-    frc::SmartDashboard::PutNumber("Flywheel Velocity", velocity);
 
     targetFound = limetable->GetNumber("tv", 0.0);
 
     if (targetFound) {
         verticalError = limetable->GetNumber("ty", 0.0);
-        xDistance = (hubHeight - cameraHeight) / tan((verticalError + mountingAngle) * DEGREES_TO_RADIANS);
-        velocity = (xDistance / time) / cos(shootingAngle * DEGREES_TO_RADIANS);
+        distance = (hubHeight - cameraHeight) / tan((verticalError + mountingAngle) * DEGREES_TO_RADIANS);
     }
 
-    ShooterMove(velocity / (10 * ShooterConstants::kFlywheelTicksToInches));
+    // ShooterMove(distance * 200);
 }
 
 void ShooterSubsystem::ShooterMove(double velocity) {

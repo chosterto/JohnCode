@@ -36,13 +36,12 @@ class ShooterSubsystem : public frc2::SubsystemBase {
   WPI_TalonFX feederMotorBottom{12};
   WPI_TalonSRX feederMotor{8};
 
-  double velocity;
   double shootingAngle = 60.0;
   double time = 1.5;
   double hubHeight = 104.00004;
   double cameraHeight = 27.0;
   double mountingAngle = 40.0;
   double verticalError;
-  double xDistance;
+  double distance = 0.0;
   bool targetFound;
 };

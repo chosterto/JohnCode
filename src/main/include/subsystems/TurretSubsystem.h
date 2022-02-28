@@ -39,30 +39,25 @@ class TurretSubsystem : public frc2::SubsystemBase {
   std::shared_ptr<NetworkTable> limetable = inst.GetTable("limelight");
   std::shared_ptr<NetworkTable> datatable = inst.GetTable("datatable");
 
-  TalonSRX turretMotor{6};
-
-  double m_gain;
-  double m_error = 0.0;
-  double m_speed = 0.0;
-  bool m_targetFound;
+  TalonSRX turretMotor{13};
 
   // Starting configuration
   units::foot_t xRobotFeet = 0.0_ft;
-  units::foot_t yRobotFeet = -4.17_ft;
-  double offsetAngle = 0.0;
+  units::foot_t yRobotFeet = -4.0_ft;
 
-  units::foot_t xPrev = xRobotFeet;
-  units::foot_t xCurrent;
+  units::foot_t yPrev = yRobotFeet;
+  units::foot_t yCurrent;
   double turretFOV = 180.0;
   double turretAngle = 0.0;
   double hubAngle = 0.0;
   double currentLeft;
   double currentRight;
-  double previousLeft = 0.0;
-  double previousRight = 0.0;
-  double deltaLeft;
-  double deltaRight;
   double robotAngle;
+  double m_gain;
+  double m_error = 0.0;
+  double m_speed = 0.0;
+  bool isLoopOverLeftActive;
+  bool isLoopOverRightActive;
 
 
   frc::DifferentialDriveOdometry m_odometry{frc::Rotation2d(0_deg), frc::Pose2d{yRobotFeet, xRobotFeet, 0_deg}};

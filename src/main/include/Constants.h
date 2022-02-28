@@ -15,9 +15,9 @@
  */
 
 namespace TurretConstants {
-    constexpr double kEncoderTicksPerTurretRev = 24000;
-    constexpr double kTurretCircumference = 43.98;
-    constexpr double kTurretRadiusInches = 7.0; // 19 inch turning radius
+    constexpr double kEncoderTicksPerTurretRev = 141600;
+    constexpr double kTurretCircumference = 47.12;
+    constexpr double kTurretRadiusInches = 7.5; 
 
     constexpr double kTurretTicksToInches = kTurretCircumference / kEncoderTicksPerTurretRev;  
 }

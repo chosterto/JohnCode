@@ -13,7 +13,7 @@
 #define INCHES_TO_FEET 0.083333333
 
 
-TurretSubsystem::TurretSubsystem() : m_gain(0.1) {
+TurretSubsystem::TurretSubsystem() : m_gain(0.05) {
     ZeroTurretEncoder();
     
     // turretMotor.SetNeutralMode(ctre::phoenix::motorcontrol::Coast);
@@ -37,26 +37,26 @@ void TurretSubsystem::Periodic() {
     m_odometry.Update(gyroAngle, units::foot_t(currentLeft), units::foot_t(currentRight));
 
     // Get x and y values of robot relative to hub
-    yRobotFeet = units::foot_t(m_odometry.GetPose().X());
-    // Invert X direction 
-    xCurrent = units::foot_t(m_odometry.GetPose().Y());
-    xRobotFeet -= (xCurrent - xPrev);
-    xPrev = xCurrent;
+    xRobotFeet = units::foot_t(m_odometry.GetPose().Y());
+    // Invert Y direction 
+    yCurrent = units::foot_t(m_odometry.GetPose().X());
+    yRobotFeet -= (yCurrent - yPrev);
+    yPrev = yCurrent;
     
     // Calculate the angle needed to turn towards the hub
     hubAngle = atan2(yRobotFeet.to<double>(), xRobotFeet.to<double>()) * RADIANS_TO_DEGREES;
-    turretAngle = fmod(robotAngle + offsetAngle + EstimateTurretAngle(GetTurretPos()), 360.0);
+    turretAngle = fmod(robotAngle + EstimateTurretAngle(GetTurretPos()), 360.0);
     m_error = FindTurretError(hubAngle, turretAngle);
 
     // Loop around if error exceeds range of turret
-    if (m_error > 360.0 - turretFOV) m_error -= 360;
-    if (m_error < turretFOV - 360.0) m_error += 360;
+    // if (m_error > 360.0 - turretFOV) m_error -= 360;
+    // if (m_error < turretFOV - 360.0) m_error += 360;
 
     // Calculate speed based on error
-    m_speed = Clamp(m_error * m_gain, 1.0);
+    m_speed = Clamp(m_error * m_gain, 0.5);
 
     // Limit turret rotation
-    if ( (GetTurretPos() > 6000 && m_speed > 0) || (GetTurretPos() < -6000 && m_speed < 0) ) {
+    if ( (GetTurretPos() > 35400 && m_speed > 0) || (GetTurretPos() < -35400 && m_speed < 0) ) {
         m_speed = 0.0;
     }
 
